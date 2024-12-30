@@ -11,23 +11,22 @@ paused = False
 game_over = False
 game_won = False
 shooter_x = WINDOW_WIDTH// 2
-shooter_y = 50
+shooter_y = 20
 shooter_width = 15
 shooter_height = 10
 comets = []
-sun={"x": WINDOW_WIDTH//2, "y": WINDOW_HEIGHT//2, "color": (1.0, 1.0, 0.0), 'size' : 23}
+sun={"x": WINDOW_WIDTH//2, "y": WINDOW_HEIGHT//2, "color": (1.0, 1.0, 0.0), 'size' : 15}
 # Planet properties
-g_speed = 0
 stars=[[random.randint(0, WINDOW_HEIGHT),random.randint(0, WINDOW_HEIGHT)] for i in range(50)]
 planets = [
-    {"distance": 35, "size": 6, "speed": 0.8, "angle": random.randint(0, 360), "color": (0.7, 0.7, 0.7)},  # Mercury
-    {"distance": 60, "size": 8, "speed": 0.6, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.6)},  # Venus
-    {"distance": 90, "size": 12, "speed": 0.3, "angle": random.randint(0, 360), "color": (0.1, 0.3, 0.7)},  # Earth
-    {"distance": 120, "size": 10, "speed": 0.2, "angle": random.randint(0, 360), "color": (0.8, 0.3, 0.2)},  # Mars
-    {"distance": 180, "size": 18, "speed": 0.1, "angle": random.randint(0, 360), "color": (0.9, 0.8, 0.7)},  # Jupiter
-    {"distance": 240, "size": 15, "speed": 0.07, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.5)},  # Saturn
-    {"distance": 300, "size": 12, "speed": 0.05, "angle": random.randint(0, 360), "color": (0.6, 0.8, 0.9)},  # Uranus
-    {"distance": 360, "size": 12, "speed": 0.03, "angle": random.randint(0, 360), "color": (0.2, 0.4, 0.8)},  # Neptune
+    {"distance": 30, "size": 6, "speed": 0.8, "angle": random.randint(0, 360), "color": (0.7, 0.7, 0.7), 'x':0,'y':0},  # Mercury
+    {"distance": 60, "size": 8, "speed": 0.6, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.6), 'x':0,'y':0},  # Venus
+    {"distance": 90, "size": 12, "speed": 0.3, "angle": random.randint(0, 360), "color": (0.1, 0.3, 0.7), 'x':0,'y':0},  # Earth
+    {"distance": 120, "size": 10, "speed": 0.2, "angle": random.randint(0, 360), "color": (0.8, 0.3, 0.2), 'x':0,'y':0},  # Mars
+    {"distance": 180, "size": 18, "speed": 0.1, "angle": random.randint(0, 360), "color": (0.9, 0.8, 0.7), 'x':0,'y':0},  # Jupiter
+    {"distance": 240, "size": 15, "speed": 0.07, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.5), 'x':0,'y':0},  # Saturn
+    {"distance": 300, "size": 12, "speed": 0.05, "angle": random.randint(0, 360), "color": (0.6, 0.8, 0.9), 'x':0,'y':0},  # Uranus
+    {"distance": 360, "size": 12, "speed": 0.03, "angle": random.randint(0, 360), "color": (0.2, 0.4, 0.8), 'x':0,'y':0},  # Neptune
 ]
 
 play_box = {
@@ -211,6 +210,7 @@ def draw_orbit():
 
 class Comet:
     def __init__(self, start_x, start_y):
+
         self.x = start_x
         self.y = start_y
         angle = random.uniform(0, 2 * pi)
@@ -271,7 +271,8 @@ def update_comets():
         comets.remove(comet)
     for planet in planets_to_remove:
         planets.remove(planet)
-
+    if len(planets)==0:
+        reset_game()
 def draw_comets():
     for comet in comets:
         comet.move()
@@ -318,21 +319,22 @@ def draw_stars():
 def reset_game():
     global planets, shooter_x, shooter_y, paused, shooter_width, shooter_height,g_speed,sun,comets,game_over,game_won
     shooter_x = WINDOW_WIDTH // 2
-    shooter_y = 50
+    shooter_y = 20
+    shooter_width = 15
+    shooter_height = 10
     comets = []
     # Planet properties
-    g_speed = 0
     planets = [
-        {"distance": 35, "size": 6, "speed": 0.8, "angle": random.randint(0, 360), "color": (0.7, 0.7, 0.7)},  # Mercury
-        {"distance": 60, "size": 8, "speed": 0.6, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.6)},  # Venus
-        {"distance": 90, "size": 12, "speed": 0.3, "angle": random.randint(0, 360), "color": (0.1, 0.3, 0.7)},  # Earth
-        {"distance": 120, "size": 10, "speed": 0.2, "angle": random.randint(0, 360), "color": (0.8, 0.3, 0.2)},  # Mars
-        {"distance": 180, "size": 18, "speed": 0.1, "angle": random.randint(0, 360), "color": (0.9, 0.8, 0.7)},  # Jupiter
-        {"distance": 240, "size": 15, "speed": 0.07, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.5)},  # Saturn
-        {"distance": 300, "size": 12, "speed": 0.05, "angle": random.randint(0, 360), "color": (0.6, 0.8, 0.9)},  # Uranus
-        {"distance": 360, "size": 12, "speed": 0.03, "angle": random.randint(0, 360), "color": (0.2, 0.4, 0.8)},  # Neptune
+        {"distance": 30, "size": 6, "speed": 0.8, "angle": random.randint(0, 360), "color": (0.7, 0.7, 0.7), 'x':0,'y':0},  # Mercury
+        {"distance": 60, "size": 8, "speed": 0.6, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.6), 'x':0,'y':0},  # Venus
+        {"distance": 90, "size": 12, "speed": 0.3, "angle": random.randint(0, 360), "color": (0.1, 0.3, 0.7), 'x':0,'y':0},  # Earth
+        {"distance": 120, "size": 10, "speed": 0.2, "angle": random.randint(0, 360), "color": (0.8, 0.3, 0.2), 'x':0,'y':0},  # Mars
+        {"distance": 180, "size": 18, "speed": 0.1, "angle": random.randint(0, 360), "color": (0.9, 0.8, 0.7), 'x':0,'y':0},  # Jupiter
+        {"distance": 240, "size": 15, "speed": 0.07, "angle": random.randint(0, 360), "color": (1.0, 0.9, 0.5), 'x':0,'y':0},  # Saturn
+        {"distance": 300, "size": 12, "speed": 0.05, "angle": random.randint(0, 360), "color": (0.6, 0.8, 0.9), 'x':0,'y':0},  # Uranus
+        {"distance": 360, "size": 12, "speed": 0.03, "angle": random.randint(0, 360), "color": (0.2, 0.4, 0.8), 'x':0,'y':0},  # Neptune
     ]
-    sun={"x": WINDOW_WIDTH//2, "y": WINDOW_HEIGHT//2, "color": (1.0, 1.0, 0.0), 'size' : 23}
+    sun={"x": WINDOW_WIDTH//2, "y": WINDOW_HEIGHT//2, "color": (1.0, 1.0, 0.0), 'size' : 15}
     paused = False
     comets=[]
     game_over=False
@@ -419,17 +421,18 @@ def mouseListener(button, state, x, y):
     button_y = WINDOW_HEIGHT - 10
     button_width = 20
     button_height = 20
-    adjusted_y=800-y
+    adjusted_y = 800 - y
     # Define the button's boundaries
     left_bound = button_x - button_width // 2
     right_bound = button_x + button_width // 2
     bottom_bound = button_y - button_height // 2
-    top_bound = button_y + button_height // 2        
-    exit_x = WINDOW_WIDTH - 10
-    exit_y = WINDOW_HEIGHT - 15
-    exit_size = 20
-    if button==GLUT_LEFT_BUTTON and state == GLUT_DOWN:
-        if pause_box['up1'][0] <= x <= pause_box['up2'][0] + pause_box['width']  and pause_box['down1'][1] <= 800-y <= pause_box['up2'][1] + pause_box['height']:
+    top_bound = button_y + button_height // 2
+
+    # Largest orbit's radius (replace with actual value from your code)
+    largest_orbit_radius = 250  # Example value, change it to your largest orbit radius
+
+    if button == GLUT_LEFT_BUTTON and state == GLUT_DOWN:
+        if pause_box['up1'][0] <= x <= pause_box['up2'][0] + pause_box['width'] and pause_box['down1'][1] <= 800 - y <= pause_box['up2'][1] + pause_box['height']:
             if paused:
                 print("Play clicked")
             else:
@@ -437,19 +440,31 @@ def mouseListener(button, state, x, y):
             paused = not paused
 
         # Check if the click is inside the button
-        elif left_bound <= x <= right_bound and bottom_bound <= adjusted_y <= top_bound:
+        if left_bound <= x <= right_bound and bottom_bound <= adjusted_y <= top_bound:
             print("Restart button clicked!")
             reset_game()
 
-        elif exit_x - exit_size <= x <= exit_x + exit_size and exit_y - exit_size <= adjusted_y <= exit_y + exit_size:
+        exit_x = WINDOW_WIDTH - 10
+        exit_y = WINDOW_HEIGHT - 15
+        exit_size = 20
+        if exit_x - exit_size <= x <= exit_x + exit_size and exit_y - exit_size <= adjusted_y <= exit_y + exit_size:
             glutLeaveMainLoop()
-    # glutPostRedisplay()
         else:
-            if not paused:
-            # Spawn a comet at the mouse click position
+            # Calculate distance from the center of the screen
+            center_x = WINDOW_WIDTH // 2
+            center_y = WINDOW_HEIGHT // 2
+
+            # Calculate the distance between the click point and the center of the screen
+            distance_from_center = ((x - center_x) ** 2 + (adjusted_y - center_y) ** 2) ** 0.5
+
+            # Only spawn a comet if the click is outside the largest orbit
+            if distance_from_center > max([d['distance'] for d in planets if 'distance' in d]):
                 comet = Comet(x, 800 - y)
                 comets.append(comet)
-    # glutPostRedisplay()
+            else:
+                print("Comet spawn blocked! Click outside the largest orbit.")
+
+    glutPostRedisplay()
 
 def keyboardListener(key, x, y):
     global paused, planets, sun, shooter_x, shooter_y, game_over, game_won
@@ -489,7 +504,7 @@ def init():
 glutInit()
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB)
 glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT)
-glutCreateWindow(b"Interactive Solar System Game")
+glutCreateWindow(b"Interactive Solar System")
 init()
 glutDisplayFunc(display)
 glutIdleFunc(animate)
