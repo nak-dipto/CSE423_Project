@@ -427,6 +427,9 @@ def mouseListener(button, state, x, y):
     right_bound = button_x + button_width // 2
     bottom_bound = button_y - button_height // 2
     top_bound = button_y + button_height // 2
+    exit_x = WINDOW_WIDTH - 10
+    exit_y = WINDOW_HEIGHT - 15
+    exit_size = 20
 
     # Largest orbit's radius (replace with actual value from your code)
     largest_orbit_radius = 250  # Example value, change it to your largest orbit radius
@@ -443,13 +446,9 @@ def mouseListener(button, state, x, y):
         if left_bound <= x <= right_bound and bottom_bound <= adjusted_y <= top_bound:
             print("Restart button clicked!")
             reset_game()
-
-        exit_x = WINDOW_WIDTH - 10
-        exit_y = WINDOW_HEIGHT - 15
-        exit_size = 20
         if exit_x - exit_size <= x <= exit_x + exit_size and exit_y - exit_size <= adjusted_y <= exit_y + exit_size:
             glutLeaveMainLoop()
-        else:
+        elif not paused:
             # Calculate distance from the center of the screen
             center_x = WINDOW_WIDTH // 2
             center_y = WINDOW_HEIGHT // 2
